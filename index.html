@@ -3,594 +3,741 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneLinerRecon</title>
-    <!-- Use a monospace font for the terminal look -->
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <title>OneLinerRecon - Cyber Leelawat</title>
+    <!-- Fallback to a common monospace font -->
     <style>
-        /* --- Global Styles & Theme Variables --- */
+        /* CSS Variables for Neon Styling */
         :root {
-            --neon-green: #00FF41;
-            --dark-bg: #0A0A0A;
-            --shadow-color: rgba(0, 255, 65, 0.7);
+            --color-bg: #000000;
+            --color-text: #00FF41; /* Neon Green */
+            --color-glow: #00CC33; /* Slightly darker glow for depth */
+            --color-accent: #008822;
+            --font-main: 'Fira Code', 'Source Code Pro', monospace;
+            --transition-speed: 0.25s;
         }
+
+        /* Basic Reset & Body Styling */
         body {
-            font-family: 'Fira Code', monospace;
-            background-color: var(--dark-bg);
-            color: var(--neon-green);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-main);
             margin: 0;
             padding: 0;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
             overflow-x: hidden;
+            font-size: 14px;
         }
 
-        /* --- Text Glow Effect --- */
-        .text-glow {
-            text-shadow: 0 0 5px var(--shadow-color), 0 0 10px var(--shadow-color);
+        /* Main Container for Centering */
+        .container {
+            width: 95%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 0;
+            flex-grow: 1;
         }
 
-        /* --- Header & Title --- */
+        /* Neon Glow Effect */
+        .neon-text {
+            text-shadow: 0 0 5px var(--color-glow), 0 0 10px var(--color-glow);
+            letter-spacing: 2px;
+            transition: all var(--transition-speed) ease-in-out;
+        }
+
+        /* Header & Logo */
         header {
             padding: 20px 0;
             text-align: center;
-            border-bottom: 2px solid var(--neon-green);
-            box-shadow: 0 4px 15px var(--shadow-color);
-            margin-bottom: 20px;
-        }
-        header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-        }
-
-        /* --- Navigation --- */
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px 0;
-            background-color: #1a1a1a;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-        }
-        .nav-button {
-            background: none;
-            border: 2px solid transparent;
-            color: var(--neon-green);
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            font-family: 'Fira Code', monospace;
-            text-transform: uppercase;
-            border-radius: 4px;
-        }
-        .nav-button:hover, .nav-button.active {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 8px var(--shadow-color), inset 0 0 8px var(--shadow-color);
-            transform: translateY(-2px);
-            background-color: rgba(0, 255, 65, 0.05);
-        }
-        .nav-button:active {
-            transform: translateY(0);
-        }
-
-        /* --- Main Content --- */
-        main {
-            flex-grow: 1;
-            padding: 20px;
-            max-width: 1000px;
-            width: 90%;
-            margin: 0 auto;
-        }
-        .content-section {
-            display: none;
-            padding: 20px;
-            border: 1px solid rgba(0, 255, 65, 0.2);
-            border-radius: 8px;
-            background-color: #111;
+            border-bottom: 2px solid var(--color-accent);
+            box-shadow: 0 4px 10px rgba(0, 255, 65, 0.2);
             margin-bottom: 30px;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
         }
-        .content-section.active {
+
+        #logo {
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: bold;
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Target Input Styling */
+        .target-input-container {
+            margin-bottom: 40px;
+            padding: 15px;
+            border: 1px solid var(--color-accent);
+            border-radius: 5px;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+            background-color: rgba(0, 50, 0, 0.2);
+        }
+
+        #targetInput {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background: var(--color-bg);
+            border: 2px solid var(--color-accent);
+            color: var(--color-text);
+            border-radius: 4px;
+            box-shadow: inset 0 0 5px var(--color-accent);
+            outline: none;
+            transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        #targetInput:focus {
+            border-color: var(--color-text);
+            box-shadow: inset 0 0 10px var(--color-text), 0 0 15px var(--color-glow);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Tab Navigation */
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--color-accent);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .tab-button {
+            background: transparent;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            color: rgba(0, 255, 65, 0.5); /* Faded default */
+            font-size: 1rem;
+            font-family: var(--font-main);
+            transition: color var(--transition-speed), box-shadow var(--transition-speed), background-color var(--transition-speed);
+            position: relative;
+            outline: none;
+        }
+
+        .tab-button:hover:not(.active) {
+            color: var(--color-glow);
+            text-shadow: 0 0 2px var(--color-glow);
+        }
+
+        .tab-button.active {
+            color: var(--color-text);
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--color-text);
+            border-bottom: 3px solid var(--color-text);
+            margin-bottom: -2px; /* Pull into border */
+        }
+
+        .tab-content {
+            display: none;
+            padding-top: 20px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .tab-content.active {
             display: block;
         }
 
-        /* --- Input & Generation Area --- */
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap; /* Allows wrapping on mobile */
-        }
-        .input-group input {
-            flex-grow: 1;
-            padding: 10px;
-            background-color: #000;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            border-radius: 4px;
-            font-size: 1rem;
-            box-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
-            min-width: 200px;
-        }
-        .glow-button {
-            background-color: var(--neon-green);
-            color: #000;
-            font-weight: bold;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px var(--neon-green);
-            text-transform: uppercase;
-        }
-        .glow-button:hover {
-            box-shadow: 0 0 15px var(--neon-green), 0 0 25px var(--shadow-color);
-            background-color: #fff;
-            color: #000;
-        }
-        .glow-button:active {
-            opacity: 0.8;
+        /* Command/Dork Sections */
+        .category-section {
+            background-color: rgba(0, 20, 0, 0.2);
+            border: 1px solid var(--color-accent);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.15);
         }
 
-        /* --- Command/Dork List Styling --- */
-        .command-list-container h2 {
-            font-size: 1.5rem;
-            color: var(--neon-green);
-            border-bottom: 1px dashed rgba(0, 255, 65, 0.5);
-            padding-bottom: 5px;
-            margin-top: 25px;
+        .category-title {
+            font-size: 1.25rem;
+            color: var(--color-text);
             margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed var(--color-accent);
+            text-shadow: 0 0 5px var(--color-glow);
         }
+
         .command-item {
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px dotted rgba(0, 255, 65, 0.1);
         }
+
+        .command-item:last-child {
+            border-bottom: none;
+        }
+
+        .command-label {
+            flex: 1 1 30%;
+            font-weight: bold;
+            color: var(--color-text);
+            padding-right: 15px;
+            min-width: 150px;
+        }
+
         .command-text {
-            flex-grow: 1;
-            background-color: #222;
+            flex: 1 1 50%;
+            background-color: rgba(0, 50, 0, 0.4);
             padding: 8px;
-            border-radius: 4px;
-            margin-right: 10px;
-            overflow-x: auto; /* Handles long commands */
+            border-radius: 3px;
+            overflow-x: auto;
             white-space: nowrap;
+            font-size: 0.95rem;
+            cursor: text;
         }
-        .copy-button, .copy-all-button {
-            background-color: #444;
-            color: var(--neon-green);
-            border: 1px solid var(--neon-green);
-            padding: 5px 10px;
-            border-radius: 4px;
+
+        .copy-button {
+            flex: 0 0 auto;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            border: none;
+            padding: 6px 10px;
+            margin-left: 10px;
             cursor: pointer;
-            transition: all 0.2s;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all var(--transition-speed);
+            text-shadow: none;
+            box-shadow: 0 0 5px var(--color-accent);
             font-size: 0.8rem;
-            margin-left: 5px;
         }
-        .copy-button:hover, .copy-all-button:hover {
-            background-color: var(--neon-green);
-            color: var(--dark-bg);
-            box-shadow: 0 0 5px var(--neon-green);
+
+        .copy-button:hover {
+            background: var(--color-text);
+            color: var(--color-bg);
+            box-shadow: 0 0 10px var(--color-text), 0 0 20px var(--color-glow);
         }
-        .copy-all-button {
+
+        .copy-all-btn {
+            display: block;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 10px;
             font-size: 1rem;
-            background-color: #222;
+            background: rgba(0, 100, 0, 0.6);
+            color: var(--color-text);
+            border: 1px solid var(--color-glow);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all var(--transition-speed);
+            box-shadow: 0 0 5px var(--color-glow);
         }
 
-        /* --- Footer --- */
-        footer {
-            margin-top: auto;
-            padding: 15px 10px;
-            text-align: center;
-            font-size: 0.8rem;
-            border-top: 1px solid rgba(0, 255, 65, 0.3);
-            background-color: #1a1a1a;
+        .copy-all-btn:hover {
+            background: var(--color-text);
+            color: var(--color-bg);
+            box-shadow: 0 0 15px var(--color-text);
         }
 
-        /* --- Message Box (Custom Alert) --- */
-        #message-box {
+        /* Popup Notification */
+        #notification {
             position: fixed;
             top: 20px;
             right: 20px;
-            background-color: var(--neon-green);
-            color: #000;
+            background-color: var(--color-text);
+            color: var(--color-bg);
             padding: 10px 20px;
             border-radius: 5px;
-            box-shadow: 0 0 20px var(--neon-green);
-            opacity: 0;
-            transition: opacity 0.5s, transform 0.5s;
-            transform: translateY(-50px);
-            z-index: 1000;
             font-weight: bold;
-        }
-        #message-box.show {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 1000;
+            box-shadow: 0 0 15px var(--color-text);
         }
 
-        /* --- Responsive Adjustments --- */
+        #notification.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+            border-top: 1px dashed var(--color-accent);
+            font-size: 0.8rem;
+            color: rgba(0, 255, 65, 0.7);
+        }
+
+        footer span {
+            font-weight: bold;
+            color: var(--color-text);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 600px) {
-            header h1 {
-                font-size: 2rem;
-            }
-            .nav-button {
-                padding: 8px 10px;
-                font-size: 0.8rem;
-            }
-            .input-group {
-                flex-direction: column;
-            }
-            .input-group input, .glow-button {
-                width: 100%;
-                box-sizing: border-box;
-            }
             .command-item {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 15px 0;
             }
-            .command-text {
-                width: 100%;
-                margin-right: 0;
+
+            .command-label {
                 margin-bottom: 5px;
             }
-            .copy-button {
+
+            .command-text {
                 width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .copy-button {
                 margin-left: 0;
-                margin-top: 5px;
+                width: 100%;
+            }
+
+            .tab-button {
+                flex-grow: 1;
             }
         }
     </style>
 </head>
 <body>
-
     <header>
-        <h1 class="text-glow">OneLinerRecon</h1>
+        <div id="logo" class="neon-text">OneLinerRecon</div>
     </header>
 
-    <nav id="nav-container">
-        <button class="nav-button active" data-section="oneliner">OneLiner Commands</button>
-        <button class="nav-button" data-section="google">Google Dorker</button>
-        <button class="nav-button" data-section="github">GitHub Dorker</button>
-    </nav>
+    <div class="container">
+        <!-- Shared Target Input -->
+        <div class="target-input-container">
+            <label for="targetInput" class="neon-text">Enter Target Domain (e.g., example.com)</label>
+            <input type="text" id="targetInput" placeholder="Enter target domain here" oninput="app.updateTarget()">
+        </div>
 
-    <main>
-        <!-- 1. OneLiner Commands Section -->
-        <section id="oneliner" class="content-section active">
-            <div class="input-group">
-                <input type="text" id="oneliner-target" placeholder="Enter Target Domain (e.g., example.com)" required>
-                <button class="glow-button" onclick="generateCommands('oneliner')">Generate</button>
-            </div>
-            <div id="oneliner-commands-output" class="command-list-container">
-                <p>Enter a target domain and click 'Generate' to see the reconnaissance one-liners.</p>
-            </div>
-        </section>
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" onclick="app.switchTab('commands')">OneLiner Commands</button>
+            <button class="tab-button" onclick="app.switchTab('google')">Google Dorker</button>
+            <button class="tab-button" onclick="app.switchTab('github')">GitHub Dorker</button>
+        </div>
 
-        <!-- 2. Google Dorker Section -->
-        <section id="google" class="content-section">
-            <div class="input-group">
-                <input type="text" id="google-target" placeholder="Enter Target Domain (e.g., example.com)" required>
-                <button class="glow-button" onclick="generateCommands('google')">Generate</button>
-            </div>
-            <div id="google-dorks-output" class="command-list-container">
-                <p>Enter a target domain and click 'Generate' to see the Google Dork queries.</p>
-            </div>
-        </section>
+        <!-- Tab Contents -->
+        <div id="commands" class="tab-content active">
+            <!-- Content generated by JS -->
+        </div>
 
-        <!-- 3. GitHub Dorker Section -->
-        <section id="github" class="content-section">
-            <div class="input-group">
-                <input type="text" id="github-target" placeholder="Enter Target Domain (e.g., example.com)" required>
-                <button class="glow-button" onclick="generateCommands('github')">Generate</button>
-            </div>
-            <div id="github-dorks-output" class="command-list-container">
-                <p>Enter a target domain and click 'Generate' to see the GitHub Dork queries.</p>
-            </div>
-        </section>
-    </main>
+        <div id="google" class="tab-content">
+            <!-- Content generated by JS -->
+        </div>
+
+        <div id="github" class="tab-content">
+            <!-- Content generated by JS -->
+        </div>
+    </div>
+
+    <!-- Notification Popup -->
+    <div id="notification"></div>
 
     <footer>
-        <p class="text-glow">Created by Virendra Kumar | Company: Cyber Leelawat</p>
+        <span class="neon-text">Created by Virendra Kumar</span> | Company: Cyber Leelawat
     </footer>
 
-    <!-- Custom message box for copy confirmation -->
-    <div id="message-box"></div>
-
     <script>
-        // Data Structure for all one-liners
-        const ONE_LINERS = {
-            'Subdomain Enumeration': [
-                'subfinder -d {target} -silent | httpx -silent -mc 200',
-                'assetfinder {target} | sort -u',
-                'curl -s "https://rapiddns.io/subdomain/{target}?full=1#result" | grep "href=\\"/subdomain" | awk -F\'">\' \'{print $2}\' | cut -d\'<\' -f1 | sort -u'
+        // Use a single object (app) for all global state and functions
+        const app = {
+            targetDomain: 'example.com',
+            placeholder: '{target}',
+            
+            // --- DATA DEFINITIONS ---
+            
+            // Section 1: OneLiner Commands (Standard CLI Tools)
+            oneLinerCommands: [
+                {
+                    category: 'Subdomain Enumeration',
+                    items: [
+                        { label: 'Passive Subdomains', command: 'subfinder -d {target} -silent' },
+                        { label: 'Active (Permutation)', command: 'puredns bruteforce -d {target} -w /wordlists/all.txt' },
+                        { label: 'Subdomains & Takeover Check', command: 'subfinder -d {target} | subjack -w fingerprint.txt -t 100' }
+                    ]
+                },
+                {
+                    category: 'ASN & IP Discovery',
+                    items: [
+                        { label: 'ASN & IP Info (Whois)', command: 'whois {target} | grep -E "CIDR|AS Name|OrgName"' },
+                        { label: 'Resolve to IP', command: 'echo {target} | resolveip' }
+                    ]
+                },
+                {
+                    category: 'Live Host Discovery',
+                    items: [
+                        { label: 'Probe for Live URLs', command: 'cat subdomains.txt | httpx -silent -title -webserver' },
+                        { label: 'Live IPs (Scan)', command: 'nmap -sP -iL ip_list.txt' }
+                    ]
+                },
+                {
+                    category: 'URL Collection & Analysis',
+                    items: [
+                        { label: 'From WayBack Machine', command: 'waybackurls {target} | grep -v "jpg|png|gif" | sort -u' },
+                        { label: 'URLs with Parameters', command: 'cat urls.txt | grep "=" | sort -u' },
+                        { label: 'Endpoints from JS Files', command: 'subfinder -d {target} | getallurls -js | sort -u' }
+                    ]
+                },
+                {
+                    category: 'Vulnerability Scanning',
+                    items: [
+                        { label: 'Low-Severity Scan', command: 'nuclei -l urls.txt -t default-logins.yaml' },
+                        { label: 'LFI Payload Fuzzing', command: 'ffuf -w LFI_payloads.txt -u {target}/file?id=FUZZ' }
+                    ]
+                },
+                {
+                    category: 'Sensitive File Discovery',
+                    items: [
+                        { label: 'Robots.txt Analysis', command: 'curl -s {target}/robots.txt | grep -E "Disallow:|Sitemap:"' },
+                        { label: 'Common Backups', command: 'ffuf -w wordlists/common_backups.txt -u {target}/FUZZ' }
+                    ]
+                },
+                {
+                    category: 'Hidden Parameter Discovery',
+                    items: [
+                        { label: 'Param Mining (Basic)', command: 'Arjun -u {target}/index.php' },
+                        { label: 'Guess Parameters', command: 'ffuf -w wordlists/params.txt -u {target}/index.php?FUZZ=1' }
+                    ]
+                },
+                {
+                    category: 'Directory & File Bruteforcing',
+                    items: [
+                        { label: 'Dir & File Discovery', command: 'gobuster dir -u {target} -w /wordlists/dir.txt -t 50' },
+                        { label: 'Extension Enumeration', command: 'ffuf -w /wordlists/extensions.txt -u {target}/indexFUZZ' }
+                    ]
+                },
+                // --- ADDED MISSING CATEGORIES ---
+                {
+                    category: 'WordPress Security Testing',
+                    items: [
+                        { label: 'WP Version & Info', command: 'wpscan --url {target} --enumerate vp' },
+                        { label: 'Plugin & Theme Scan', command: 'wpscan --url {target} --enumerate ap,at' }
+                    ]
+                },
+                {
+                    category: 'CORS Testing',
+                    items: [
+                        { label: 'CORS Misconfig Check', command: 'cat urls.txt | nuclei -t cors-misconfig.yaml' },
+                        { label: 'Manual Origin Fuzz', command: 'curl -i -X GET "{target}" -H "Origin: evil.com"' }
+                    ]
+                },
+                {
+                    category: 'Subdomain Takeover',
+                    items: [
+                        // Subjack is already defined in Subdomain Enumeration, providing another dedicated tool.
+                        { label: 'Check for Takeover', command: 'subfinder -d {target} | nuclei -t subdomain-takeover.yaml' }
+                    ]
+                },
+                {
+                    category: 'Git Repository Disclosure',
+                    items: [
+                        { label: 'Git disclosure check', command: 'gobuster dir -u {target}/.git -w /path/to/git.txt' }
+                    ]
+                },
+                {
+                    category: 'SSRF Testing',
+                    items: [
+                        { label: 'Generic SSRF payload', command: 'curl {target}?url=http://169.254.169.254/latest/meta-data/instance-id' },
+                        { label: 'Bypass (Hex Encoded)', command: 'curl {target}?url=http://0x7f000001/' }
+                    ]
+                },
+                {
+                    category: 'Open Redirect Testing',
+                    items: [
+                        { label: 'Basic Redirect Payload', command: 'curl {target}/redirect?url=http://evil.com' },
+                        { label: 'Parameter Fuzzing', command: 'qsreplace "https://evil.com" < urls_with_params.txt' }
+                    ]
+                },
+                {
+                    category: 'LFI Testing',
+                    items: [
+                        { label: 'Basic LFI Payload', command: 'curl {target}/file.php?file=../../../../etc/passwd' },
+                        { label: 'LFI with Null Byte', command: 'curl {target}/file.php?file=../../../../etc/passwd%00' }
+                    ]
+                },
+                {
+                    category: 'Additional Tools',
+                    items: [
+                        { label: 'Find Live Hosts', command: 'cat subdomains.txt | naabu -silent' }
+                    ]
+                }
             ],
-            'ASN & IP Discovery': [
-                'whois {target} | grep -E \'ASN|CIDR\'',
-                'dig +short {target} A',
-                'nslookup -type=any {target}'
+
+            // Section 2: Google Dorker
+            googleDorks: [
+                { title: 'Directory listing vulnerabilities', dork: 'site:{target} intitle:"index of"' },
+                { title: 'Exposed Configuration files', dork: 'site:{target} ext:env OR ext:conf OR ext:ini' },
+                { title: 'Exposed Database files', dork: 'site:{target} ext:sql OR ext:sqlite OR ext:db' },
+                { title: 'Find WordPress', dork: 'site:{target} inurl:wp-admin OR inurl:wp-content' },
+                { title: 'Exposed log files', dork: 'site:{target} ext:log OR ext:txt intext:password' },
+                { title: 'Backup and old files', dork: 'site:{target} ext:bak OR ext:old OR ext:zip OR ext:tar.gz' },
+                { title: 'Login pages', dork: 'site:{target} inurl:login OR inurl:admin OR inurl:dashboard' },
+                { title: 'SQL errors', dork: 'site:{target} intext:"sql syntax" OR intext:"mysql error"' },
+                { title: 'Publicly exposed documents', dork: 'site:{target} ext:pdf OR ext:docx OR ext:pptx' },
+                { title: 'phpinfo()', dork: 'site:{target} inurl:phpinfo.php' },
+                { title: 'Finding Backdoors', dork: 'site:{target} "c99.php" OR "r57.php"' },
+                { title: 'Install / Setup files', dork: 'site:{target} inurl:install OR inurl:setup' },
+                { title: 'Open Redirects', dork: 'site:{target} inurl:url=http OR inurl:redir=http' },
+                { title: 'Apache STRUTS RCE', dork: 'site:{target} ext:action OR ext:do filetype:action' },
+                { title: 'Find Pastebin entries', dork: 'site:pastebin.com {target}' },
+                { title: 'Employees on LINKEDIN', dork: 'site:linkedin.com "employees" "{target}"' },
+                { title: '.htaccess sensitive files', dork: 'site:{target} inurl:.htaccess' },
+                { title: 'Find Subdomains', dork: 'site:*.{target}' },
+                { title: 'Find Sub-Subdomains', dork: 'site:*.*.{target}' },
+                { title: 'Find WordPress (Wayback Machine)', dork: 'site:web.archive.org/web/ {target} inurl:wp-admin' },
+                { title: 'Search in GITHUB', dork: 'site:github.com {target}' },
+                { title: 'Search in OpenBugBounty', dork: 'site:openbugbounty.org {target}' },
+                { title: 'Search in Reddit', dork: 'site:reddit.com {target}' },
+                { title: 'Test CrossDomain', dork: 'site:{target} inurl:crossdomain.xml' },
+                { title: 'Check in ThreatCrowd', dork: 'site:threatcrowd.org {target}' },
+                { title: 'Find .SWF files', dork: 'site:{target} ext:swf' },
+                { title: 'Check in crt.sh', dork: 'site:crt.sh {target}' },
+                { title: 'Check in CENSYS [IP4]', dork: 'site:censys.io ip:{target}' },
+                { title: 'Search in SHODAN', dork: 'site:shodan.io {target}' }
             ],
-            'Live Host Discovery': [
-                'nmap -p 80,443,8080 -iL subs.txt -oG live_hosts.grep',
-                'cat subs.txt | httpx -silent -t 50 -mc 200,302 | tee live_targets.txt'
-            ],
-            'URL Collection & Analysis': [
-                'cat live_targets.txt | gau | grep -v "=" | sort -u | tee all_urls.txt',
-                'waybackurls {target} | grep -v "\\.css$\\|\\.js$\\|\\.png$" | sort -u'
-            ],
-            'Vulnerability Scanning (Passive)': [
-                'whatweb {target} | grep -i "server"',
-                'nmap -sV --script http-methods {target}'
-            ],
-            'Sensitive File Discovery': [
-                'dirsearch -u {target} -e html,php,bak,zip',
-                'ffuf -w /path/to/wordlist/common.txt -u {target}/FUZZ'
-            ],
-            'Hidden Parameter Discovery': [
-                'cat all_urls.txt | unfurl -u keys | sort -u | tee parameters.txt',
-                'cat all_urls.txt | getparam' // Assuming getparam is installed
-            ],
-            'Directory & File Bruteforcing': [
-                'gobuster dir -u https://{target} -w /path/to/wordlist/medium.txt -t 30',
-                'wpscan --url {target} --enumerate u'
-            ],
-            'WordPress Security Testing': [
-                'wpscan --url {target} --enumerate vp,vt,tt',
-                'nmap -p 80,443 --script http-wordpress-enum {target}'
-            ],
-            'CORS Testing': [
-                'echo "{target}" | subjs | grep -i "postmessage"',
-                'curl -s -I -H "Origin: evil.com" https://{target}'
-            ],
-            'Subdomain Takeover': [
-                'subjack -w subs.txt -t 100 -timeout 30 -o takeover.txt -c /path/to/fingerprints.json'
-            ],
-            'Git Repository Disclosure': [
-                'git-dumper http://{target}/.git/ ./.git_backup/'
-            ],
-            'SSRF Testing': [
-                'gf ssrf all_urls.txt | tee ssrf_candidates.txt' // Assuming gf is installed
-            ],
-            'Open Redirect Testing': [
-                'gf redirect all_urls.txt | tee redirect_candidates.txt' // Assuming gf is installed
-            ],
-            'LFI Testing': [
-                'gf lfi all_urls.txt | tee lfi_candidates.txt' // Assuming gf is installed
-            ],
-            'Additional Tools (General)': [
-                'echo {target} | hakrawler -depth 2',
-                'echo {target} | katana -depth 3 -c 50'
+
+            // Section 3: GitHub Dorker
+            githubDorks: [
+                {
+                    category: 'Finding Files',
+                    items: [
+                        { label: 'Configuration Files', dork: '" {target} " filename:config.php dbpasswd' },
+                        { label: 'SSH Keys', dork: '" {target} " filename:id_rsa' },
+                        { label: 'Cloud Credentials', dork: '" {target} " filename:aws_keys OR filename:gcloud_keys' }
+                    ]
+                },
+                {
+                    category: 'API Keys / Tokens / Passwords',
+                    items: [
+                        { label: 'API Keys', dork: '" {target} " "API_KEY" -filename' },
+                        { label: 'Client Secrets', dork: '" {target} " client_secret' },
+                        { label: 'Database Credentials', dork: '" {target} " user_pass' },
+                        { label: 'Auth Tokens', dork: '" {target} " "auth_token"' }
+                    ]
+                },
+                {
+                    category: 'Finding Usernames',
+                    items: [
+                        { label: 'User/Org Dorks', dork: 'user:"{target}" OR org: तारीफ of "{target}"' },
+                        { label: 'Email Addresses', dork: '"@{target}" language:json' }
+                    ]
+                },
+                {
+                    category: 'Finding via Extension',
+                    items: [
+                        { label: 'Private Keys (.pem)', dork: '" {target} " extension:pem private' },
+                        { label: 'SQL Dumps', dork: '" {target} " extension:sql "mysql dump password"' },
+                        { label: 'Configuration (.yaml)', dork: '" {target} " extension:yaml password' }
+                    ]
+                },
             ]
         };
 
-        // Data Structure for Google Dorker
-        const GOOGLE_DORKS = [
-            'site:{target} ext:sql|bak|zip|rar|7z|tar.gz',
-            'site:{target} inurl:admin|login|portal|cpanel',
-            'site:{target} "password"|token|secret',
-            'site:{target} intitle:"index of"|intitle:"Index of"|intitle:"powered by"',
-            'site:{target} intext:public_html|ftp|ssh',
-            'site:{target} filetype:log|xls|xlsx|doc|docx|pdf',
-            'site:{target} -www -mail -ftp',
-            'site:{target} inurl:phpinfo.php|test.php',
-        ];
-
-        // Data Structure for GitHub Dorker
-        const GITHUB_DORKS = [
-            '"{target}" filename:.env',
-            '"{target}" filename:config',
-            '"{target}" token',
-            '"{target}" password',
-            '"{target}" api_key',
-            '"{target}" "private key"',
-            '"{target}" authorization',
-            '"{target}" credentials',
-        ];
-
-        // --- Core Functions ---
+        // --- CORE FUNCTIONS ---
 
         /**
-         * Switches the active section in the main view.
-         * @param {string} sectionId - The ID of the section to show.
+         * Initializes the application: reads initial target, renders content, and sets up auth.
          */
-        function showSection(sectionId) {
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
+        app.init = function() {
+            // Get initial target or use default
+            const initialTarget = document.getElementById('targetInput').value;
+            if (initialTarget) {
+                app.targetDomain = initialTarget;
+            }
 
-            document.querySelectorAll('.nav-button').forEach(button => {
+            // Render all sections on load
+            app.renderAllSections();
+        };
+
+        /**
+         * Updates the target domain from the input field and re-renders all dynamic content.
+         */
+        app.updateTarget = function() {
+            const newTarget = document.getElementById('targetInput').value.trim();
+            app.targetDomain = newTarget || 'example.com';
+            app.renderAllSections();
+        };
+
+        /**
+         * Switches the active tab content.
+         * @param {string} tabName - The name of the tab to switch to ('commands', 'google', 'github').
+         */
+        app.switchTab = function(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(button => {
                 button.classList.remove('active');
-                if (button.getAttribute('data-section') === sectionId) {
-                    button.classList.add('active');
-                }
             });
-        }
+
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`.tab-button[onclick*="'${tabName}'"]`).classList.add('active');
+        };
 
         /**
-         * Generates the commands/dorks for the active section.
-         * @param {string} sectionType - 'oneliner', 'google', or 'github'.
+         * Renders all dynamic sections (commands, dorks).
          */
-        function generateCommands(sectionType) {
-            const targetInputId = `${sectionType}-target`;
+        app.renderAllSections = function() {
+            app.renderSection('commands', app.oneLinerCommands, true);
+            app.renderSection('google', app.googleDorks, false);
+            app.renderSection('github', app.githubDorks, true);
+        };
+
+        /**
+         * Renders a single dynamic section (Tab Content).
+         * @param {string} elementId - The ID of the container element ('commands', 'google', 'github').
+         * @param {Array<Object>} data - The data array (commands or dorks).
+         * @param {boolean} categorized - True if data is categorized (like commands/github dorks).
+         */
+        app.renderSection = function(elementId, data, categorized) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = '';
             
-            // FIX: Dynamically select the correct output element ID based on naming conventions
-            let outputElementId;
-            if (sectionType === 'oneliner') {
-                outputElementId = 'oneliner-commands-output';
-            } else {
-                // The Google and GitHub sections use '-dorks-output' in the HTML
-                outputElementId = `${sectionType}-dorks-output`;
-            }
-
-            const target = document.getElementById(targetInputId).value.trim();
-            const outputElement = document.getElementById(outputElementId);
-
-            // Safety check for null element
-            if (!outputElement) {
-                console.error(`Error: Output element with ID ${outputElementId} not found.`);
-                return;
-            }
-
-            if (!target) {
-                outputElement.innerHTML = `<p style="color:red;">Please enter a valid target domain (e.g., example.com).</p>`;
-                return;
-            }
-
             let html = '';
-            let data = {};
-            let copyButtonText = '';
-            let isOneLiner = false;
 
-            if (sectionType === 'oneliner') {
-                data = ONE_LINERS;
-                copyButtonText = 'Copy Command';
-                isOneLiner = true;
-                for (const category in data) {
-                    html += `<h2>${category}</h2>`;
-                    data[category].forEach(command => {
-                        html += createCommandItem(command, target, copyButtonText);
+            if (categorized) {
+                // Renders categorized data (OneLiner Commands, GitHub Dorks)
+                data.forEach(category => {
+                    html += `<div class="category-section" data-category="${category.category.replace(/\s/g, '-')}">`;
+                    html += `<h3 class="category-title neon-text">${category.category}</h3>`;
+
+                    category.items.forEach(item => {
+                        // FIX: Determine the text property: prioritize 'command' (for OneLiner), fallback to 'dork' (for GitHub Dorks)
+                        const rawText = item.command || item.dork;
+                        const labelText = item.label || item.title;
+
+                        // Check if item has content (command or dork) before proceeding
+                        if (!item || !rawText || typeof rawText !== 'string') {
+                            console.error(`Skipping malformed item (missing content/command/dork for ${elementId}):`, item);
+                            return; 
+                        }
+
+                        const commandText = rawText.replace(new RegExp(app.placeholder, 'g'), app.targetDomain);
+                        html += `
+                            <div class="command-item">
+                                <span class="command-label">${labelText}:</span>
+                                <span class="command-text">${commandText}</span>
+                                <button class="copy-button" onclick="app.copyToClipboard('${app.escape(commandText)}')">Copy</button>
+                            </div>
+                        `;
                     });
-                }
-            } else if (sectionType === 'google') {
-                data = { 'Google Dorks': GOOGLE_DORKS };
-                copyButtonText = 'Copy Dork';
-                html += `<h2>Google Dork Queries for ${target}</h2>`;
-                GOOGLE_DORKS.forEach(dork => {
-                    html += createCommandItem(dork, target, copyButtonText);
+                    
+                    // Add Copy All button for the category
+                    html += `<button class="copy-all-btn" onclick="app.copyAll(this)">Copy All in Category</button>`;
+                    html += '</div>';
                 });
-            } else if (sectionType === 'github') {
-                data = { 'GitHub Dorks': GITHUB_DORKS };
-                copyButtonText = 'Copy Dork';
-                html += `<h2>GitHub Dork Queries for ${target}</h2>`;
-                GITHUB_DORKS.forEach(dork => {
-                    html += createCommandItem(dork, target, copyButtonText);
+            } else {
+                // Renders uncategorized data (Google Dorks)
+                html += `<div class="category-section" data-category="google-dorks">`;
+                html += `<h3 class="category-title neon-text">Google Dork Queries (site:${app.targetDomain})</h3>`;
+
+                data.forEach(item => {
+                    // FIX: Check if item.dork exists before calling replace to prevent TypeError
+                    if (!item || !item.dork || typeof item.dork !== 'string') {
+                        console.error("Skipping malformed item (missing 'dork'):", item);
+                        return; 
+                    }
+
+                    const dorkText = item.dork.replace(new RegExp(app.placeholder, 'g'), app.targetDomain);
+                    html += `
+                        <div class="command-item">
+                            <span class="command-label">${item.title} &rarr;</span>
+                            <span class="command-text">${dorkText}</span>
+                            <button class="copy-button" onclick="app.copyToClipboard('${app.escape(dorkText)}')">Copy</button>
+                        </div>
+                    `;
                 });
+                html += `<button class="copy-all-btn" onclick="app.copyAll(this)">Copy All Dorks</button>`;
+                html += '</div>';
             }
 
-            outputElement.innerHTML = html;
-
-            // Add the "Copy All" button at the bottom of the section
-            const copyAllText = isOneLiner ? 'Copy All One-Liners' : 'Copy All Dorks';
-            outputElement.innerHTML += `<button class="copy-all-button glow-button" onclick="copyAllCommands('${sectionType}')">${copyAllText}</button>`;
-        }
+            container.innerHTML = html;
+        };
 
         /**
-         * Creates the HTML structure for a single command/dork item.
-         * @param {string} template - The command template string (e.g., 'subfinder -d {target}').
-         * @param {string} target - The user-provided target domain.
-         * @param {string} buttonText - The text for the copy button.
-         * @returns {string} The HTML string for the command item.
+         * Copies text to the clipboard and shows a notification.
+         * @param {string} textToCopy - The text to be copied.
          */
-        function createCommandItem(template, target, buttonText) {
-            const finalCommand = template.replace(/{target}/g, target);
-            // Escape quotes for use in the onclick attribute
-            const escapedCommand = finalCommand.replace(/"/g, '&quot;');
-            return `
-                <div class="command-item">
-                    <div class="command-text">${finalCommand}</div>
-                    <button class="copy-button" onclick="copyCommand('${escapedCommand}')">${buttonText}</button>
-                </div>
-            `;
-        }
-
-        /**
-         * Copies a single string to the clipboard and shows a confirmation message.
-         * @param {string} text - The text to copy.
-         */
-        function copyCommand(text) {
+        app.copyToClipboard = function(textToCopy) {
             try {
-                // Create a temporary textarea element
-                const tempTextArea = document.createElement('textarea');
-                tempTextArea.value = text;
-                document.body.appendChild(tempTextArea);
+                // Required fallback for cross-browser/iframe compatibility
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                textarea.style.position = 'fixed'; // Avoid scrolling to bottom
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                
+                // Use the deprecated but widely supported command
+                document.execCommand('copy'); 
+                document.body.removeChild(textarea);
 
-                // Select and copy the text
-                tempTextArea.select();
-                document.execCommand('copy');
+                app.showNotification('✅ Copied to clipboard!');
 
-                // Clean up
-                document.body.removeChild(tempTextArea);
-
-                showMessage('Copied to Clipboard!');
             } catch (err) {
-                console.error('Copy failed:', err);
-                showMessage('Copy failed. Please copy manually.', true);
+                console.error('Could not copy text: ', err);
+                app.showNotification('❌ Copy failed. Check console.');
             }
-        }
+        };
 
         /**
-         * Copies all generated commands in the current active section.
-         * @param {string} sectionType - 'oneliner', 'google', or 'github'.
+         * Collects all command/dork texts within a parent category and copies them.
+         * @param {HTMLElement} button - The 'Copy All' button element clicked.
          */
-        function copyAllCommands(sectionType) {
-            const outputElementId = `${sectionType}-commands-output`;
-            const outputElement = document.getElementById(outputElementId);
-            const commandTexts = outputElement.querySelectorAll('.command-text');
+        app.copyAll = function(button) {
+            const categorySection = button.closest('.category-section');
+            if (!categorySection) return;
 
-            if (commandTexts.length === 0) {
-                showMessage('No commands generated yet.', true);
-                return;
-            }
-
-            let allCommands = '';
-            commandTexts.forEach(item => {
-                allCommands += item.textContent.trim() + '\n';
+            // Select all command-text elements within that section
+            const commandElements = categorySection.querySelectorAll('.command-text');
+            
+            let allCommands = [];
+            commandElements.forEach(el => {
+                // Trim to remove potential surrounding whitespace from HTML formatting
+                allCommands.push(el.textContent.trim()); 
             });
 
-            // Use the copyCommand logic but with the aggregated text
-            try {
-                const tempTextArea = document.createElement('textarea');
-                tempTextArea.value = allCommands.trim();
-                document.body.appendChild(tempTextArea);
-                tempTextArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempTextArea);
-                showMessage('All commands copied to clipboard!');
-            } catch (err) {
-                console.error('Copy failed:', err);
-                showMessage('Copy All failed. Please copy manually.', true);
+            if (allCommands.length > 0) {
+                const combinedText = allCommands.join('\n');
+                app.copyToClipboard(combinedText);
+            } else {
+                 app.showNotification('Nothing to copy in this category.');
             }
-        }
+        };
 
         /**
-         * Displays a temporary message box.
+         * Displays the popup notification.
          * @param {string} message - The message to display.
-         * @param {boolean} isError - If true, treats the message as an error.
          */
-        function showMessage(message, isError = false) {
-            const msgBox = document.getElementById('message-box');
-            msgBox.textContent = message;
-
-            // Optional: Change color for error messages
-            msgBox.style.backgroundColor = isError ? 'red' : 'var(--neon-green)';
-            msgBox.style.boxShadow = isError ? '0 0 20px red' : '0 0 20px var(--neon-green)';
-
-            msgBox.classList.add('show');
+        app.showNotification = function(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            // Auto-hide after 2 seconds
             setTimeout(() => {
-                msgBox.classList.remove('show');
-            }, 3000);
+                notification.classList.remove('show');
+            }, 2000);
+        };
+
+        /**
+         * Utility function to escape single quotes for onclick attribute.
+         * @param {string} str - The string to escape.
+         * @returns {string} - The escaped string.
+         */
+        app.escape = function(str) {
+            return str.replace(/'/g, '\\\'');
         }
 
-        // --- Event Listeners and Initialization ---
 
-        // Set up navigation event listeners
-        document.getElementById('nav-container').addEventListener('click', (event) => {
-            if (event.target.classList.contains('nav-button')) {
-                const section = event.target.getAttribute('data-section');
-                showSection(section);
-            }
-        });
-
-        // Initialize on page load (ensure 'oneliner' is active)
-        document.addEventListener('DOMContentLoaded', () => {
-            showSection('oneliner');
-        });
+        // Start the application after the DOM is fully loaded
+        window.onload = app.init;
     </script>
-
 </body>
 </html>
