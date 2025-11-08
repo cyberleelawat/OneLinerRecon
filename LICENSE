@@ -1,21 +1,80 @@
-MIT License
+# Cyber Leelawat Proprietary License (CLPL) v1.0
 
-Copyright (c) 2025 Virendra Kumar
+> **Short name:** CLPL v1.0  
+> **Author / Copyright holder:** Cyber Leelawat (Founder: Virendra Kumar Leelawat)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+---
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+## 1. Copyright & Ownership
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+© [Year] Cyber Leelawat. All rights reserved.
+
+This software, documentation, design, artwork, and any associated files (collectively, the "Software") are the exclusive property of **Cyber Leelawat**. The Software was created and is maintained by Cyber Leelawat (Founder: **Virendra Kumar Leelawat**, also referred to as "Mr. Leelawat").
+
+---
+
+## 2. License Grant — Limited & Conditional
+
+Subject to the terms and conditions below, Cyber Leelawat grants you a **limited, non-exclusive, non-transferable, revocable** license to view and use the Software **for personal, educational, or evaluation purposes only**.
+
+Any reproduction, distribution, public display, commercial use, derivative work, modification, or incorporation of the Software into other projects **requires explicit prior written permission** from Cyber Leelawat.
+
+---
+
+## 3. Prohibited Uses
+
+You MAY NOT, without prior written authorization from Cyber Leelawat:
+
+- Use the Software for any commercial purposes or monetize the Software (including, but not limited to, resale, sublicensing, bundling into paid products, or offering as a paid service).
+- Reproduce, distribute, publish, or create derivative works of the Software.
+- Remove, alter, or obscure any copyright, trademark, or other proprietary notices.
+- Use the Software to perform unauthorized security testing, penetration testing, or scanning against systems for which you do not have explicit permission.
+- Publish, leak, or share the Software’s source code, configuration, or derived commands on public forums, repositories, or marketplaces without permission.
+- Claim authorship of the Software or any part thereof.
+
+---
+
+## 4. Compliance & Enforcement
+
+Unauthorized use, copying, modification, or distribution of the Software may result in civil and criminal penalties. Cyber Leelawat reserves the right to pursue legal action, including injunctions and monetary damages, against any individual or organization who violates this License.
+
+By using the Software, you acknowledge and agree that Cyber Leelawat may enforce its rights to the fullest extent permitted by law.
+
+---
+
+## 5. Disclaimer of Warranties
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. CYBER LEELAWAT DISCLAIMS ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND ANY IMPLIED WARRANTIES ARISING FROM COURSE OF DEALING OR PERFORMANCE.
+
+Cyber Leelawat is not responsible for any misuse of the Software or for any consequences arising from the use of commands, dorks, or automation patterns included in the Software.
+
+---
+
+## 6. Limitation of Liability
+
+IN NO EVENT SHALL CYBER LEELAWAT, ITS AFFILIATES, CONTRIBUTORS, OR ITS FOUNDER (VIRENDRA KUMAR LEELAWAT) BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES, INCLUDING LOSS OF REVENUE OR PROFITS, LOSS OF DATA, OR BUSINESS INTERRUPTION, ARISING OUT OF OR IN CONNECTION WITH THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+---
+
+## 7. Permission Requests & Contact
+
+For permission to reuse, modify, or commercialize the Software, or for any legal inquiries, please contact:
+
+- **Email:** cyberleelawat@gmail.com
+  *(Replace with actual contact email)*
+
+- **GitHub:** https://github.com/cyberleelawat
+
+State your request clearly (purpose, scope, duration, and intended redistribution). Written approval must be obtained before any restricted activity.
+
+---
+
+## 8. Governing Law & Jurisdiction
+
+This License shall be governed by and construed in accordance with the laws of India. Any disputes arising under or in connection with this License shall be subject to the exclusive jurisdiction of the courts located in Jodhpur, Rajasthan, India.
+
+---
+
+## 9. Acceptance
+
+By downloading, copying, installing, or otherwise using the Software, you acknowledge that you have read, understood, and agreed to be bound by the terms of this License.
